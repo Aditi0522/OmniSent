@@ -1,12 +1,12 @@
-from flask import Flask
+from fastapi import FastAPI
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/")
+@app.get("/")
 def hello():
  return "Hello! How are you chica?"
 
-if __name__ == "main":
+if __name__ == "__main__":
     app.run(debug=True)
 
 

@@ -47,8 +47,8 @@ class SCRFDFaceDetector:
 
             x1,y1,x2,y2 = bbox
             h,w = frame.shape[:2]
-            pad_x = int((x2-x1)*0.1)
-            pad_y = int((y2-y1)*0.1)
+            pad_x = int((x2-x1)*0.4)
+            pad_y = int((y2-y1)*0.4)
             x1 = max(0,x1-pad_x)
             y1 = max(0,y1-pad_y)
             x2 = min(w,x2+pad_x)

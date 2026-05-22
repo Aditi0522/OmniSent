@@ -1,4 +1,3 @@
-import os
 import tensorflow as tf
 
 def load_model(model_path):

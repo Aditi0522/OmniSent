@@ -83,7 +83,7 @@ class FacialEmotionAnalyzer:
                 faces_found += 1
                 face_crop = detected[0]["face_crop"]
 
-                emotions, confidence = self.emotion_predictor.predict(face_crop)
+                emotions, confidence = self.emotion_predictor.predict_emotion(face_crop)
                 timeline.add_frame(timestamp_ms, emotions, confidence)
 
                 ux = self.ux_calc.compute(emotions, confidence)
@@ -152,7 +152,7 @@ class FacialEmotionAnalyzer:
             return {"error": "No face detected"}
 
         face_crop = detected[0]["face_crop"]
-        emotions, confidence = self.emotion_predictor.predict(face_crop)
+        emotions, confidence = self.emotion_predictor.predict_emotion(face_crop)
         ux = self.ux_calc.compute(emotions, confidence)
         dominant = max(emotions, key=emotions.get)
 

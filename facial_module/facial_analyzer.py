@@ -22,11 +22,11 @@ import cv2
 import time
 import logging
 import numpy as np
+from .model import EMOTIONS
 from .face_detector import SCRFDFaceDetector
 from .emotion_predictor import EmotionPredictor
-from .temporal import TemporalSmoother, EmotionTimeline, aggregate_summary
-from .usability_metrics import UsabilityMetricsCalculator
-from .model import EMOTIONS
+from utils.temporal import TemporalSmoother, EmotionTimeline, aggregate_summary
+from utils.usability_metrics import UsabilityMetricsCalculator
 
 
 class FacialEmotionAnalyzer:

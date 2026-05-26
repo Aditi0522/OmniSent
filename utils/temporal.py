@@ -4,7 +4,7 @@
 ## metric for emotion detection analysis.
 
 import numpy as np
-from facial_module.model import EMOTIONS
+from .utils import EMOTIONS
 from collections import deque
 
 class TemporalSmoother:

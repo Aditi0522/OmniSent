@@ -3,8 +3,6 @@ import torch.nn as nn
 import logging
 from timm import create_model
 
-EMOTIONS = ['Angry', 'Disgusted', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Surprised']
-
 class EmotiEffLibFineTuned(nn.Module):
     """EfficientNet-B0 backbone + 7-class emotion classifier head."""
 

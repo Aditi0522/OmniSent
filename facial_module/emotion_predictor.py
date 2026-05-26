@@ -7,7 +7,8 @@ import numpy as np
 from PIL import Image
 from torch.cuda import is_available
 from torchvision import transforms
-from .model import EmotiEffLibFineTuned, load_model, EMOTIONS
+from .model import EmotiEffLibFineTuned, load_model
+from utils.utils import EMOTIONS
 
 class EmotionPredictor:
     def __init__(self, model_path: str, device:torch.device = None):

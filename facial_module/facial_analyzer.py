@@ -17,12 +17,10 @@
 ## Orchestrates face detection, emotion prediction, temporal
 ## smoothing, and usability metrics into a single pipeline.
 
-import os
 import cv2
 import time
 import logging
 import numpy as np
-from .model import EMOTIONS
 from .face_detector import SCRFDFaceDetector
 from .emotion_predictor import EmotionPredictor
 from utils.temporal import TemporalSmoother, EmotionTimeline, aggregate_summary

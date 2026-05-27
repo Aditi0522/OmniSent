@@ -9,7 +9,6 @@ from facial_module.facial_analyzer import FacialEmotionAnalyzer
 router = APIRouter(prefix="/analyze/facial", tags=["Facial Analysis"])
 logger = logging.getLogger(__name__)
 
-# Initialized on startup from main.py
 analyzer: FacialEmotionAnalyzer = None
 
 

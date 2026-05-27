@@ -48,5 +48,5 @@ class EmotionPredictor:
             self.logger.error(f"Error predicting emotions: {e}")
             fallback = {e:round(1.0/7,4) for e in EMOTIONS}
             return fallback, 0.0
-        
+
 

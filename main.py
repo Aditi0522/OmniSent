@@ -1,6 +1,7 @@
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from api.voice import router as voice_router, init_analyzer as init_voice
 from api.facial import router as facial_router, init_analyzer
 from config import settings
 
@@ -31,8 +32,14 @@ async def startup():
         min_segment_ms=settings.MIN_SEGMENT_MS,
         det_size=settings.DET_SIZE,
     )
+    init_voice(
+        model_path=str(settings.VOICE_MODEL_PATH),
+        segment_duration=settings.SEGMENT_DURATION,
+        smoothing_window=settings.VOICE_SMOOTHING_WINDOW,
+         )
 
 app.include_router(facial_router)
+app.include_router(voice_router)
 
 @app.get("/")
 async def root():

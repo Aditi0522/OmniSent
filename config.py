@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     SMOOTHING_WINDOW: int = 10
     MIN_SEGMENT_MS: int = 500
     DET_SIZE: tuple[int,int] = (640,640)
+    VOICE_MODEL_PATH: Path = BASE_DIR/ "voice_module" / "models" / "best_model.pt"
+    SEGMENT_DURATION: float = 2.0
+    VOICE_SMOOTHING_WINDOW: int = 3
 
     model_config = SettingsConfigDict(
             env_file = ".env",

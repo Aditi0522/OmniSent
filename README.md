@@ -240,9 +240,9 @@ curl -X POST "http://localhost:8000/analyze/facial/video?process_fps=10" \
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-This project is developed as part of **Google Summer of Code 2026** under **AOSSIE**. Contributions, issues, and feature requests are welcome.
+Please do! if you find this project up ur alley or u simply find this to be ur niche, would love to collaborate with anyone interested. Kindly adhere to the contribution guidelines.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/new-module`)
@@ -252,9 +252,7 @@ This project is developed as part of **Google Summer of Code 2026** under **AOSS
 
 ---
 
-## 👩‍💻 Author
+## Author
 
-**Aditi Soni** — [GitHub](https://github.com/Aditi0522) · [LinkedIn](https://linkedin.com/in/aditi-soni)
-
-GSoC 2026 Contributor @ AOSSIE
+**Aditi Soni** — [GitHub](https://github.com/Aditi0522) · [LinkedIn](https://www.linkedin.com/in/aditisoni05/)
 

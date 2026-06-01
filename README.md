@@ -1,22 +1,16 @@
-## OmniSent
+# OmniSent — Multimodal Sentiment Analysis Engine
 
-OmniSent is a multimodal sentiment analysis engine for usability studies. Analyzes facial expressions, voice prosody, and speech content simultaneously to map a user's emotional state throughout a usability session, fusing all three signals into a timestamped emotional timeline and actionable UX metrics.
-
-# 🧠 OmniSent — Multimodal Sentiment Analysis Engine
+OmniSent is a multimodal sentiment analysis engine for usability studies. Analyzes facial expressions, voice prosody, and speech content simultaneously to map a user's emotional state throughout a usability session, fusing all three signals into a timestamped emotional timeline and actionable UX metrics. 
 
 > **Infer emotional states from usability testing videos through facial expressions and voice tone, generating actionable UX insights.**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GSoC](https://img.shields.io/badge/GSoC-2026-blue?logo=google&logoColor=white)](https://summerofcode.withgoogle.com)
-
-**Google Summer of Code 2026** · [AOSSIE](https://aossie.org) · Mentored under the RUXAILAB project
 
 ---
 
-## 📖 Overview
+## Overview
 
 OmniSent is a multimodal sentiment analysis engine designed for **usability studies**. It processes video recordings of usability testing sessions to analyze participants' emotional responses through multiple modalities — facial expressions, voice tone, and (upcoming) spoken text.
 
@@ -29,7 +23,7 @@ Unlike general-purpose emotion detection tools, OmniSent is purpose-built for UX
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
                          ┌─────────────────────┐
@@ -72,7 +66,7 @@ Unlike general-purpose emotion detection tools, OmniSent is purpose-built for UX
 
 ---
 
-## 🧑 Facial Module
+## Facial Module
 
 Detects faces in video frames and classifies emotions at 10 FPS with 100ms temporal resolution.
 
@@ -87,7 +81,7 @@ Detects faces in video frames and classifies emotions at 10 FPS with 100ms tempo
 
 ---
 
-## 🎙️ Voice Module
+## Voice Module
 
 Extracts audio from video and analyzes emotional tone in 2-second segments.
 
@@ -100,7 +94,7 @@ Extracts audio from video and analyzes emotional tone in 2-second segments.
 
 ---
 
-## 📊 Usability Metrics
+## Usability Metrics
 
 Raw 7-class emotions are transformed into composite UX scores:
 
@@ -117,7 +111,7 @@ Raw 7-class emotions are transformed into composite UX scores:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technologies |
 |---|---|
@@ -130,7 +124,7 @@ Raw 7-class emotions are transformed into composite UX scores:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -246,81 +240,6 @@ curl -X POST "http://localhost:8000/analyze/facial/video?process_fps=10" \
 
 ---
 
-## 📁 Project Structure
-
-```
-OmniSent/
-├── main.py                          # FastAPI app, startup, routing
-├── config.py                        # Centralized settings (.env support)
-├── requirements.txt
-│
-├── api/
-│   ├── facial.py                    # POST /analyze/facial/video
-│   └── voice.py                     # POST /analyze/voice/audio, /from-video
-│
-├── facial_module/
-│   ├── model.py                     # EmotiEffLibFineTuned (EfficientNet-B0)
-│   ├── face_detector.py             # SCRFDFaceDetector (InsightFace)
-│   ├── emotion_predictor.py         # Face crop → 7-class probabilities
-│   ├── analyzer.py                  # FacialEmotionAnalyzer (orchestrator)
-│   └── models/                      # Fine-tuned weights (.gitignored)
-│
-├── voice_module/
-│   ├── model.py                     # WavLMEmotionClassifier
-│   ├── audio_preprocessor.py        # ffmpeg, resample, segment
-│   ├── emotion_predictor.py         # Waveform → 7-class probabilities
-│   ├── analyzer.py                  # VoiceEmotionAnalyzer (orchestrator)
-│   └── models/                      # Fine-tuned weights (.gitignored)
-│
-├── shared/
-│   ├── constants.py                 # EMOTIONS list (single source of truth)
-│   ├── temporal.py                  # TemporalSmoother + EmotionTimeline
-│   └── usability_metrics.py         # UX scores + event detection
-│
-├── schema/
-│   └── facial.py                    # Pydantic response models
-│
-├── training/                        # Offline training scripts
-│   ├── fine_tuning.py
-│   ├── benchmark.py
-│   └── augmentation.py
-│
-└── tests/
-```
-
----
-
-## 📈 Current Progress
-
-- [x] Facial sentiment pipeline (SCRFD + EfficientNet-B0)
-- [x] Voice sentiment pipeline (WavLM-Base-Plus)
-- [x] Temporal smoothing (confidence-weighted moving average)
-- [x] Emotion timeline with segment detection
-- [x] Usability metrics computation (6 composite scores)
-- [x] Automatic UX event detection
-- [x] FastAPI backend with REST endpoints
-- [x] Model fine-tuning on 70,000+ images / 17,500+ audio clips
-- [ ] Text sentiment module (Whisper + GoEmotions)
-- [ ] Multimodal late fusion
-- [ ] Dashboard / visualization frontend
-- [ ] IEMOCAP dataset integration for voice
-- [ ] End-to-end evaluation on usability study recordings
-
----
-
-## 🗺️ Roadmap
-
-| Phase | Timeline | Deliverable |
-|---|---|---|
-| ~~Facial Module~~ | ~~Week 1-3~~ | ~~SCRFD + EfficientNet-B0 pipeline~~ ✅ |
-| ~~Voice Module~~ | ~~Week 3-5~~ | ~~WavLM pipeline + fine-tuning~~ ✅ |
-| Text Module | Week 5-7 | Whisper STT → GoEmotions classification |
-| Multimodal Fusion | Week 7-9 | Late fusion (confidence-weighted avg across modalities) |
-| Dashboard | Week 9-11 | Visualization frontend for UX researchers |
-| Evaluation | Week 11-12 | End-to-end testing on real usability study data |
-
----
-
 ## 🤝 Contributing
 
 This project is developed as part of **Google Summer of Code 2026** under **AOSSIE**. Contributions, issues, and feature requests are welcome.
@@ -330,12 +249,6 @@ This project is developed as part of **Google Summer of Code 2026** under **AOSS
 3. Commit your changes (`git commit -m 'Add new module'`)
 4. Push to the branch (`git push origin feature/new-module`)
 5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 

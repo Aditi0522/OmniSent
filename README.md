@@ -27,40 +27,40 @@ Unlike general-purpose emotion detection tools, OmniSent is purpose-built for UX
 
 ```
                          ┌─────────────────────┐
-                         │   Usability Video    │
+                         │   Usability Video   │
                          └──────────┬──────────┘
                                     │
                          ┌──────────▼──────────┐
-                         │    FastAPI Backend   │
-                         │      (main.py)       │
+                         │    FastAPI Backend  │
+                         │      (main.py)      │
                          └──────────┬──────────┘
                                     │
               ┌─────────────────────┼─────────────────────┐
               │                     │                     │
     ┌─────────▼─────────┐ ┌────────▼────────┐  ┌─────────▼─────────┐
     │  Facial Module     │ │  Voice Module   │  │  Text Module      │
-    │                    │ │                 │  │  (Coming Soon)     │
+    │                    │ │                 │  │  (Coming Soon)    │
     │  SCRFD Detection   │ │  ffmpeg Extract │  │                   │
     │  EfficientNet-B0   │ │  WavLM-Base+    │  │  Whisper STT      │
-    │  7-class Emotion   │ │  7-class Emotion│  │  GoEmotions        │
+    │  7-class Emotion   │ │  7-class Emotion│  │  GoEmotions       │
     └─────────┬──────────┘ └────────┬────────┘  └─────────┬─────────┘
               │                     │                     │
               └─────────────────────┼─────────────────────┘
                                     │
                       ┌─────────────▼─────────────┐
-                      │    Shared Components       │
-                      │                            │
-                      │  Temporal Smoother          │
-                      │  Emotion Timeline           │
-                      │  Usability Metrics Calc     │
-                      └─────────────┬──────────────┘
+                      │    Shared Components      │
+                      │                           │
+                      │  Temporal Smoother        │
+                      │  Emotion Timeline         │
+                      │  Usability Metrics Calc   │
+                      └─────────────┬─────────────┘
                                     │
                          ┌──────────▼──────────┐
-                         │   JSON Response      │
-                         │  • Emotion Summary   │
-                         │  • UX Metrics        │
-                         │  • Timeline Segments │
-                         │  • Event Flags       │
+                         │   JSON Response     │
+                         │  • Emotion Summary  │
+                         │  • UX Metrics       │
+                         │  • Timeline Segments│
+                         │  • Event Flags      │
                          └─────────────────────┘
 ```
 

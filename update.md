@@ -1,0 +1,9 @@
+## update
+
+This project is helping me learn a lot in all aspects, I am delving deeper into linux, Neovim with lazy-vim setup(happy to tell you I have atleast got the hang of this one), fine tuning of models, and also how can we forget trying to build actual realworld project model which I am proud of (see sometimes that's the hard part but we are working on it). I am also diving deeper into computer vision, sentiment analysis, deep learning and hell lot more. I will keep this updated on my learning status, gotta look back and see what goals I achieved and all. Until then, Seeya! 
+
+Update 1: While building this project, I am surely realizing how to modularize the setup. It's wonderful seeing things turn around for better, from raw scripts on kaggle to full encapsulated modules.
+
+Update 2: I have completed wiring up Facial sentiment detection module and it's working end-to-end! Now i have started deep diving into voice sentiment analysis, I was gonna go with Wav2Vec2 model but after more research realized WavLM-Large is a much better choice (Current SOTA model for emotion detection), I have also requested IEMOCAP dataset from University of Southern California to better improve our model fine-tuning as IEMOCAP is a gold standard dataset. Hopefully, they will accept my request. Currently I have decided to go with WavLM-Base to get started with the voice module, I will keep preparing my model in tandem until then. Excited to see this project become flesh now that I am seeing some bare bones!
+
+Update 2.1: Also for voice module out current dataset is Ravdess, Crema D and TESS(plus augmentation performed on dataset), this is a very in control dataset and not suitable for real world analysis so we will be taking this for stage 1 for our fine tuning process. For further improvement, we will use IEMOCAP in stage 2 for more in-the-wild training of our model. Also temporal smoothing and usability metrics will remain same for all modules.

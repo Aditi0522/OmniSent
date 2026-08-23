@@ -1,25 +1,28 @@
-# OmniSent — Multimodal Sentiment Analysis Engine
+# 🧠 OmniSent — Multimodal Sentiment Analysis Engine
 
-OmniSent is a multimodal sentiment analysis engine for usability studies. Analyzes facial expressions, voice prosody, and speech content simultaneously to map a user's emotional state throughout a usability session, fusing all three signals into a timestamped emotional timeline and actionable UX metrics. 
+OmniSent is a multimodal sentiment analysis engine for usability studies. Analyzes facial expressions, voice prosody, and speech content simultaneously to map a user's emotional state throughout a usability session, fusing all three signals into a timestamped emotional timeline and actionable UX metrics.
 
-> **Infer emotional states from usability testing videos through facial expressions and voice tone, generating actionable UX insights.**
+> **Infer emotional states from usability testing videos through facial expressions, voice tone, and spoken text — generating actionable UX insights.**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org)
+[![GSoC](https://img.shields.io/badge/GSoC-2026-fbbc04?logo=google&logoColor=white)](https://summerofcode.withgoogle.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
 ## Overview
 
-OmniSent is a multimodal sentiment analysis engine designed for **usability studies**. It processes video recordings of usability testing sessions to analyze participants' emotional responses through multiple modalities — facial expressions, voice tone, and (upcoming) spoken text.
+OmniSent processes video recordings of usability testing sessions to analyze participants' emotional responses through **three modalities** — facial expressions, voice tone, and spoken text — then fuses them into a single unified emotional timeline.
 
 Unlike general-purpose emotion detection tools, OmniSent is purpose-built for UX research:
 
+- **Multimodal fusion** — combines face, voice, and text signals with confidence-weighted late fusion for more accurate analysis than any single modality
 - **Temporal analysis** — tracks how emotions evolve *over time*, not just single-frame snapshots
 - **UX-specific metrics** — translates raw emotions into actionable scores like frustration index, confusion score, and engagement level
 - **Event detection** — automatically flags moments of frustration spikes, delight, or emotional shifts
-- **Modular architecture** — each modality works independently and can be combined through late fusion
+- **Graceful degradation** — if a modality fails (no face detected, no audio), the remaining modalities still produce results
 
 ---
 
@@ -92,7 +95,22 @@ Extracts audio from video and analyzes emotional tone in 2-second segments.
 | Training Data | RAVDESS + CREMA-D + TESS | 17,500+ audio clips, 2-phase training |
 | Segmentation | torchaudio | 2-second non-overlapping chunks with timestamp tracking |
 
----
+### Text Module
+Transcribes speech from audio and classifies emotional content per utterance.
+| Component | Technology | Detail |
+|---|---|---|
+| Speech-to-Text | OpenAI Whisper | Timestamped transcript segments |
+| Emotion Model | DistilRoBERTa (HuggingFace) | 7-class classifier, pretrained on emotion data |
+| Input | Whisper transcript segments | Each utterance analyzed independently |
+| Post-processing | Temporal Smoother | Same shared pipeline as facial and voice |
+### Multimodal Fusion
+Combines predictions from all three modalities into a unified emotional timeline.
+| Component | Method | Detail |
+|---|---|---|
+| Temporal Alignment | Window-based | Aligns face (10fps), voice (2s), text (variable) to common 2-second windows |
+| Fusion Strategy | Confidence-weighted late fusion | Higher-confidence modalities automatically dominate |
+| Missing Modalities | Graceful degradation | Weight renormalization when a modality is absent |
+**Emotion Classes (all modules):** `Angry` · `Disgusted` · `Fearful` · `Happy` · `Neutral` · `Sad` · `Surprised`
 
 ## Usability Metrics
 
@@ -116,13 +134,13 @@ Raw 7-class emotions are transformed into composite UX scores:
 | Category | Technologies |
 |---|---|
 | **Backend** | Python 3.10+, FastAPI, Uvicorn, Pydantic |
-| **Facial ML** | PyTorch, timm (EfficientNet-B0), InsightFace (SCRFD), OpenCV |
-| **Voice ML** | PyTorch, HuggingFace Transformers (WavLM), torchaudio |
+| **Facial ML** | PyTorch, timm (EfficientNet-B0), InsightFace (SCRFD), OpenCV, ONNX Runtime |
+| **Voice ML** | PyTorch, HuggingFace Transformers (WavLM-Base-Plus), torchaudio |
+| **Text ML** | HuggingFace Transformers (DistilRoBERTa), OpenAI Whisper |
 | **Audio Processing** | ffmpeg, torchaudio |
 | **Data Augmentation** | albumentations |
-| **Training** | Kaggle (GPU), scikit-learn |
-
----
+| **Evaluation** | scikit-learn (classification report, confusion matrix, F1 score) |
+| **Training Infra** | Kaggle (P100/T4 GPU) |
 
 ## Quick Start
 
@@ -160,17 +178,20 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 Visit **http://localhost:8000/docs** for the interactive API documentation.
 
 ---
-
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/` | Service status |
-| `GET` | `/analyze/facial/health` | Facial module health check |
-| `POST` | `/analyze/facial/video` | Upload video → facial emotion analysis |
-| `GET` | `/analyze/voice/health` | Voice module health check |
-| `POST` | `/analyze/voice/audio` | Upload audio → voice emotion analysis |
-| `POST` | `/analyze/voice/from-video` | Upload video → extract audio → voice analysis |
+|--------|----------|-------------|
+| GET | `/` | Service status |
+| GET | `/analyze/facial/health` | Facial module health check |
+| POST | `/analyze/facial/video` | Upload video → facial emotion analysis |
+| GET | `/analyze/voice/health` | Voice module health check |
+| POST | `/analyze/voice/audio` | Upload audio → voice emotion analysis |
+| POST | `/analyze/voice/from-video` | Upload video → extract audio → voice analysis |
+| GET | `/analyze/text/health` | Text module health check |
+| POST | `/analyze/text/from-audio` | Upload audio → transcribe → text emotion analysis |
+| POST | `/analyze/text/from-video` | Upload video → extract audio → transcribe → text analysis |
+| POST | `/analyze/multimodal` | Upload video → run all modalities → fused analysis |
 
 ### Example — Analyze a Video (Facial)
 
